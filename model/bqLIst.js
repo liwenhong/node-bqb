@@ -51,6 +51,9 @@ var BqList = sequelize.define(
     isShowIndex: {
       type: Sequelize.BOOLEAN,
       defaultValue: false
+    },
+    serieDescrib: {
+      type: Sequelize.STRING
     }
   },
   {
@@ -82,7 +85,8 @@ exports.add = obj => {
       isHot: !!obj.isHot ? obj.isHot : false,
       isTop: !!obj.isTop ? obj.isTop : false,
       isShowIndex: !!obj.isShowIndex ? obj.isShowIndex : false,
-      imgName: !!obj.imgName ? obj.imgName : ''
+      imgName: !!obj.imgName ? obj.imgName : '',
+      serieDescrib: !!obj.serieDescrib ? obj.serieDescrib: ''
     }).then(res => {
         resolve(res);
       })
@@ -129,12 +133,13 @@ exports.querySerieBq = (isHot = false,isTop = false,pageSize=5,curPage = 1) => {
         lists:[]
       };
       // console.log('.............');
-      // console.log(res);
+      console.log(res);
       // result.total = res.count.length>0? res.count[0].count : 0;
       for(let i = 0;i<res.rows.length;i++){
         let temp ={
           serieId:res.rows[i].dataValues.serieId,
           serieName:'',
+          serieDescrib: '',
           total:0,
           data:[]
         }
@@ -143,6 +148,7 @@ exports.querySerieBq = (isHot = false,isTop = false,pageSize=5,curPage = 1) => {
           temp.total = da.count;
           if(da.rows.length>0){
             temp.serieName = da.rows[0].serieName;
+            temp.serieDescrib = !!da.rows[0].serieDescrib? da.rows[0].serieDescrib: ''
           }
         })
         await getTotalSerie(isHot,isTop).then(r => {
@@ -253,6 +259,11 @@ exports.search = (keyword,pageSize,curPage) => {
         },
         {
           imgDescribe: {
+            [Op.like]: '%'+ keyword+'%'
+          }
+        },
+        {
+          imgName: {
             [Op.like]: '%'+ keyword+'%'
           }
         }

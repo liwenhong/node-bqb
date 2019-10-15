@@ -5,7 +5,7 @@ const multer = require('koa-multer');
 const path = require('path');
 const mk = require('../utils/mkdir')
 const qniu = require('../utils/qiniu')
-const qiniubaseurl = 'http://p9f6p1k1n.bkt.clouddn.com/'
+const qiniubaseurl = 'https://qn.doutub.com/'
 // const upload = multer({ dest: path.join(process.cwd(),'/uploads/') });
 const storage = multer.diskStorage({  
   //文件保存路径  

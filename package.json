@@ -9,11 +9,12 @@
     "email": "784327282@qq.com"
   },
   "scripts": {
-    "server-product": "SCENE=product node app.js",
+    "server-product": "pm2 start pm2.json",
     "server-test": "SCENE=test node app.js",
     "server-development": "SCENE=development node app.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "ioredis": "*",
     "ipaddr.js": "^1.4.0",
     "koa": "2.2.0",
