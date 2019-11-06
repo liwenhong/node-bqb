@@ -29,6 +29,6 @@
     "nodemailer": "*",
     "qiniu": "^7.1.7",
     "request": "*",
-    "sequelize": "^4.37.8"
+    "sequelize": "^5.15.1"
   }
 }
