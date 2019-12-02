@@ -109,7 +109,6 @@ exports.queryNewBq = (typeId,isShowIndex,pageSize = 10,curPage = 1) => {
     if(!!isShowIndex){
       d.isShowIndex = isShowIndex
     }
-    console.log(d)
     BqList.findAndCountAll({limit:pageSize,offset:pageSize*(curPage-1), order: sequelize.literal("updatedAt DESC"),where:d}).then(res => {
       resolve(res);
     }).catch(error => {
@@ -132,9 +131,6 @@ exports.querySerieBq = (isHot = false,isTop = false,pageSize=5,curPage = 1) => {
         total:0,
         lists:[]
       };
-      // console.log('.............');
-      console.log(res);
-      // result.total = res.count.length>0? res.count[0].count : 0;
       for(let i = 0;i<res.rows.length;i++){
         let temp ={
           serieId:res.rows[i].dataValues.serieId,
@@ -152,7 +148,6 @@ exports.querySerieBq = (isHot = false,isTop = false,pageSize=5,curPage = 1) => {
           }
         })
         await getTotalSerie(isHot,isTop).then(r => {
-          console.log(r)
           result.total = r
         })
         result.lists.push(temp)
@@ -177,7 +172,6 @@ function getTotalSerie(isHot,isTop){
   return new Promise((resolve,reject) => {
     sequelize.query("select count(*) as count from (select serieId from bqList where isHot="+isHot+" and isTop="+isTop+" and serieId != '' group by serieId) count", { type: sequelize.QueryTypes.SELECT})
     .then(res => {
-      console.log(res)
       if(res && res.length>0){
         resolve(res[0].count)
       }else{

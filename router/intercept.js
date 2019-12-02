@@ -17,9 +17,9 @@ router.all('*', async(ctx, next) => {
         if (ipArray.length == 0 || ipArray.includes(ctx.ipv4)) {  //不做IP限制或满足IP限制的可以访问
             await next();
             ctx.body = {
-                code: 1,
-                msg: '请求成功',
-                data: ctx.data
+                code: !!ctx.data && !!ctx.data.code ? ctx.data.code : 1,
+                msg:  !!ctx.data && !!ctx.data.msg ? ctx.data.msg : '请求成功',
+                data: (!!ctx.data && !!ctx.data.code && ctx.data.code === -1) ? '' : ctx.data
             };
             logUtil.reqLogger(ctx);
         } else {
@@ -31,13 +31,12 @@ router.all('*', async(ctx, next) => {
         }
         console.log('response data:', ctx.data);
         ctx.body = {
-            code: 1,
-            msg: '请求成功',
-            data: ctx.data
+            code: !!ctx.data && !!ctx.data.code ? ctx.data.code : 1,
+            msg:  !!ctx.data && !!ctx.data.msg ? ctx.data.msg : '请求成功',
+            data: (!!ctx.data && !!ctx.data.code && ctx.data.code === -1) ? '' : ctx.data
         }
     } catch (e) {
         let err = new ApiError(e.message);
-        console.error(e);
         ctx.body = {
             code: err.code,
             msg: err.message,
