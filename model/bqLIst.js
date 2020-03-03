@@ -124,7 +124,7 @@ exports.queryNewBq = (typeId,isShowIndex,pageSize = 10,curPage = 1) => {
  * @param {页面大小} pageSize 
  * @param {当前页} curPage 
  */
-exports.querySerieBq = (isHot = false,isTop = false,pageSize=5,curPage = 1) => {
+exports.querySerieBq = (isHot = false,isTop = false,pageSize=5,curPage = 1, subLimit) => {
   return new Promise((resolve,reject) => {
     BqList.findAndCountAll({attributes:['serieId'],group:'serieId',order:sequelize.literal("serieId DESC"),limit:pageSize,offset:pageSize*(curPage-1),where:{[Op.and]: [{isHot: isHot}, {isTop: isTop},{serieId:{[Op.ne]:''}}]}}).then(async (res) => {
       let result = {
@@ -139,7 +139,7 @@ exports.querySerieBq = (isHot = false,isTop = false,pageSize=5,curPage = 1) => {
           total:0,
           data:[]
         }
-        await getSerieDetail(res.rows[i].dataValues.serieId).then(da => {
+        await getSerieDetail(res.rows[i].dataValues.serieId, subLimit).then(da => {
           temp.data = (da.rows);
           temp.total = da.count;
           if(da.rows.length>0){
@@ -159,9 +159,9 @@ exports.querySerieBq = (isHot = false,isTop = false,pageSize=5,curPage = 1) => {
   })
 }
 
-function getSerieDetail(serieId){
+function getSerieDetail(serieId, limit = 5){
   return new Promise((resolve,reject) => {
-    BqList.findAndCountAll({where:{serieId:serieId},limit:5,offset:0}).then(res => {
+    BqList.findAndCountAll({where:{serieId:serieId},limit:limit,offset:0}).then(res => {
       resolve(res)
     }).catch(error=>{
       reject(error);

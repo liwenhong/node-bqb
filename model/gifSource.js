@@ -47,6 +47,9 @@ var GifSource = sequelize.define(
     },
     gifDesc:{
       type: Sequelize.STRING
+    },
+    gifCopyRight: {
+      type: Sequelize.STRING
     }
   },
   {
@@ -80,7 +83,8 @@ exports.addGifSource = (obj) =>{
       showIndex: obj.showIndex === 'true' ? true : false,
       splitMark: obj.splitMark ? obj.splitMark : '',
       color: obj.color ? obj.color: '#000',
-      gifDesc: obj.gifDesc ? obj.gifDesc : ''
+      gifDesc: obj.gifDesc ? obj.gifDesc : '',
+      gifCopyRight: obj.gifCopyRight || ''
     }).then(res => {
       resolve(res)
     }).catch(e => {
@@ -208,7 +212,8 @@ exports.update = (object)=>{
       showIndex:object.showIndex === 'true' ? true : false,
       splitMark:object.splitMark,
       color: object.color,
-      gifDesc: object.gifDesc
+      gifDesc: object.gifDesc,
+      gifCopyRight: object.gifCopyRight
     }, {
       where: {
         id: object.id

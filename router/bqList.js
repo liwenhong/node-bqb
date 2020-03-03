@@ -40,7 +40,8 @@ router.get("/querySerieBq", async (ctx,next) => {
   let isTop =  eval(q.isTop.toLowerCase())
   let pageSize = !!q.pageSize?parseInt(q.pageSize):10;
   let curPage = !!q.curPage?parseInt(q.curPage):1;
-  let result = await bqList.querySerieBq(isHot,isTop,pageSize,curPage);
+  let subLimit = !!q.subLimit ? parseInt(q.subLimit) : 5
+  let result = await bqList.querySerieBq(isHot,isTop,pageSize,curPage,subLimit);
   ctx.data = result;
   return next();
 })
