@@ -220,6 +220,7 @@ exports.update = (object)=>{
     BqList.update({
       serieName: object.serieName,
       imgDescribe:object.imgDescribe,
+      serieDescrib: object.serieDescrib || '',
       path:object.path,
       imgName:object.imgName,
       searchKey:object.searchKey,

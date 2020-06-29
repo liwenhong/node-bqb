@@ -28,6 +28,7 @@ router.all('*', async(ctx, next) => {
                 msg: '无法访问!'
             };
             logUtil.reqLogger(ctx);
+            return next()
         }
         console.log('response data:', ctx.data);
         ctx.body = {
@@ -42,6 +43,7 @@ router.all('*', async(ctx, next) => {
             msg: err.message,
             data: ""
         }
+        return next()
     }
 });
 

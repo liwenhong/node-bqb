@@ -18,7 +18,8 @@ var ImgSource = sequelize.define(
     pid:Sequelize.INTEGER,//父级类型ID
     path:Sequelize.STRING,//素材路径
     sourceKey:Sequelize.STRING,//素材关键字，便于查询
-    imgName:Sequelize.STRING
+    imgName:Sequelize.STRING,
+    sort: Sequelize.INTEGER //  排序字段
   },
   {
     // 如果为 true 则表的名称和 model 相同，即 user
@@ -112,7 +113,7 @@ exports.delSource = (id) => {
 }
 
 /**
- * 更新搜财资源
+ * 更新素材资源
  * @param {} object 
  */
 exports.updateSource = (object)=>{
@@ -122,7 +123,8 @@ exports.updateSource = (object)=>{
       name:object.name,
       path:object.path,
       imgName:object.imgName,
-      sourceKey:object.sourceKey
+      sourceKey:object.sourceKey,
+      sort: object.sort || 1
     }, {
       where: {
         id: object.id
