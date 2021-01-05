@@ -14,7 +14,7 @@
     "server-development": "SCENE=development node app.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "ioredis": "*",
     "ipaddr.js": "^1.4.0",
     "koa": "2.2.0",
